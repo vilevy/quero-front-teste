@@ -19,39 +19,102 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
   const [allCoursesName, setAllCoursesName] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // get data from api
   useEffect(() => {
     const getCourses = async () => {
       const response = await ScholarshipServices.get();
       setAllCourses(response.data);
-      setFilteredCourses(response.data.sort((a, b) => a.university.name > b.university.name ? 1 : -1));
-      setAllCoursesName([...new Set(response.data.map(course => course.course.name))].sort());
-      setAllCities([...new Set(response.data.map(course => course.campus.city))].sort());
+      setFilteredCourses(
+        response.data.sort((a, b) =>
+          a.university.name > b.university.name ? 1 : -1
+        )
+      );
+      setAllCoursesName(
+        [...new Set(response.data.map(course => course.course.name))].sort()
+      );
+      setAllCities(
+        [...new Set(response.data.map(course => course.campus.city))].sort()
+      );
       setLoading(false);
       return response.data;
     };
     getCourses();
   }, []);
 
-  const filterOrder = (by) => {
-    switch(by) {
-      case 'universityName':
-        setFilteredCourses([...filteredCourses].sort((a, b) => a.university.name > b.university.name ? 1 : -1));
+  // filter when any filter property update
+  useEffect(() => {
+    setFilteredCourses(
+      [...allCourses].filter(theCourse => {
+        let courseName = course !== "" ? theCourse.course.name : course;
+
+        let mod = "";
+        if (theCourse.course.kind === "EaD") {
+          mod = "distance";
+        } else if (theCourse.course.kind === "Presencial") {
+          mod = "presential";
+        }
+
+        return (
+          courseName === course &&
+          theCourse.price_with_discount <= price &&
+          modality.includes(mod) &&
+          theCourse.campus.city.toLowerCase().includes(city.toLowerCase())
+        );
+      })
+    );
+  }, [city, course, modality, price, allCourses]);
+
+  const filterOrder = by => {
+    switch (by) {
+      case "universityName":
+        setFilteredCourses(
+          [...filteredCourses].sort((a, b) =>
+            a.university.name > b.university.name ? 1 : -1
+          )
+        );
         break;
-      case 'lowerPrice':
-        setFilteredCourses([...filteredCourses].sort((a, b) => a.price_with_discount > b.price_with_discount ? 1 : -1));
+      case "lowerPrice":
+        setFilteredCourses(
+          [...filteredCourses].sort((a, b) =>
+            a.price_with_discount > b.price_with_discount ? 1 : -1
+          )
+        );
         break;
-      case 'higherPrice':
-        setFilteredCourses([...filteredCourses].sort((a, b) => a.price_with_discount < b.price_with_discount ? 1 : -1));
+      case "higherPrice":
+        setFilteredCourses(
+          [...filteredCourses].sort((a, b) =>
+            a.price_with_discount < b.price_with_discount ? 1 : -1
+          )
+        );
         break;
-      case 'rating':
-        setFilteredCourses([...filteredCourses].sort((a, b) => a.university.rating > b.university.rating ? 1 : -1));
+      case "rating":
+        setFilteredCourses(
+          [...filteredCourses].sort((a, b) =>
+            a.university.rating > b.university.rating ? 1 : -1
+          )
+        );
         break;
       default:
         break;
-      }
-  }
+    }
+  };
 
-  console.log(filteredCourses);
+  const handleModality = e => {
+    const { checked, id } = e.target;
+    let newModality = [...modality];
+    if (checked) {
+      newModality.push(id);
+      setModality(newModality);
+    } else {
+      const idx = newModality.indexOf(id);
+      newModality.splice(idx, 1);
+      setModality(newModality);
+    }
+  };
+
+  const sliderSteps =
+    price >= 2000 ? 500 : price >= 1000 ? 100 : price >= 300 ? 50 : 25;
+
 
   return (
     <div className="modal">
@@ -68,11 +131,16 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
           <div className="modal-filters-container">
             <div className="modal-filter">
               <label>Selecione sua cidade</label>
-              <input type="text" />
+              <input type="text" value={city} onChange={e => setCity(e.target.value)}/>
             </div>
             <div className="modal-filter">
               <label>Selecione o curso de sua preferência</label>
-              <select name="course" id="course">
+              <select
+                name="course"
+                id="course"
+                onChange={e => setCourse(e.target.value)}
+              >
+                <option default></option>
                 {allCoursesName.map((course, idx) => {
                   return <option key={idx}>{course}</option>;
                 })}
@@ -80,10 +148,35 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
             </div>
             <div className="modal-filter">
               <label>Como você quer estudar?</label>
-              <input type="checkbox" id="presential" />
+              <input
+                type="checkbox"
+                id="presential"
+                name="modality"
+                checked={modality.includes("presential")}
+                onChange={e => handleModality(e)}
+              />
               <label htmlFor="presential">Presencial</label>
-              <input type="checkbox" id="distance" />
+              <input
+                type="checkbox"
+                id="distance"
+                name="modality"
+                checked={modality.includes("distance")}
+                onChange={e => handleModality(e)}
+              />
               <label htmlFor="distance">A distância</label>
+            </div>
+            <div className="modal-filter">
+              <label>Até quanto pode pagar?</label>
+              <span>R${price}</span>
+              <input
+                type="range"
+                className="price-slider"
+                min="100"
+                max="10000"
+                value={price}
+                step={sliderSteps}
+                onChange={e => setPrice(e.target.value)}
+              />
             </div>
           </div>
 
@@ -91,7 +184,11 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
             <div className="modal-results-header">
               <h4>Resultado:</h4>
               <label>Ordenar por</label>
-              <select name="orderBy" id="order-by" onChange={(e) => filterOrder(e.target.value)}>
+              <select
+                name="orderBy"
+                id="order-by"
+                onChange={e => filterOrder(e.target.value)}
+              >
                 <option value="universityName">Nome da faculdade</option>
                 <option value="lowerPrice">Menor preço</option>
                 <option value="higherPrice">Maior preço</option>
