@@ -12,9 +12,21 @@ const FavoriteScholarships = () => {
   const [userFavorites, setUserFavorites] = useState([]);
   const [filteredFavorites, setfilteredFavorites] = useState(userFavorites);
 
-  const deleteFavorite = idx => setUserFavorites(userFavorites.slice(idx, 1));
+  const deleteFavorite = courseToDelete => {
+    setUserFavorites(
+      [...userFavorites].filter(
+        course => JSON.stringify(course) !== courseToDelete
+      )
+    );
+  };
 
-  const filterFavorites = semester => {};
+  const filterFavorites = semester => {
+    
+  };
+
+  const handleAddToUser = arr => {
+    setUserFavorites([...userFavorites, ...arr]);
+  };
 
   return (
     <main>
@@ -30,11 +42,23 @@ const FavoriteScholarships = () => {
       </div>
       <div>
         <AddCourse setShowModal={setShowModal} />
-        {userFavorites.map((fav, idx) => {
-          return <UserFavorite key={idx} favorite={fav} />;
+        {userFavorites.map(fav => {
+          return (
+            <UserFavorite
+              key={JSON.stringify(fav)}
+              favorite={fav}
+              deleteFavorite={deleteFavorite}
+            />
+          );
         })}
       </div>
-      {showModal && <ModalAddFavorites setShowModal={setShowModal} />}
+      {showModal && (
+        <ModalAddFavorites
+          setShowModal={setShowModal}
+          userFavorites={userFavorites}
+          handleAddToUser={handleAddToUser}
+        />
+      )}
     </main>
   );
 };
