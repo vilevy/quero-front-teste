@@ -90,7 +90,7 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
       case "rating":
         setFilteredCourses(
           [...filteredCourses].sort((a, b) =>
-            a.university.rating > b.university.rating ? 1 : -1
+            a.university.score < b.university.score ? 1 : -1
           )
         );
         break;
@@ -116,6 +116,8 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
     price >= 2000 ? 500 : price >= 1000 ? 100 : price >= 300 ? 50 : 25;
 
 
+
+  console.log(filteredCourses.length);
   return (
     <div className="modal">
       <span className="modal-close-btn" onClick={() => setShowModal(false)}>

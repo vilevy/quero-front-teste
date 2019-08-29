@@ -11,6 +11,7 @@ const ModalResult = ({course}) => {
       <p>{course.course.level}</p>
       <p>Bolsa de <span>{Math.round(course.discount_percentage)}%</span></p>
       <p>R$ {priceBrazilianFormat}/mês</p>
+      <p>{course.university.score}</p>
     </div>
   );
 }
