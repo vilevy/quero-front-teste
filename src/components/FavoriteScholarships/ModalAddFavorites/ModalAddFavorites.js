@@ -6,12 +6,15 @@ import ModalResult from "./ModalResult/ModalResult";
 // services
 import ScholarshipServices from "../../../services/ScholarshipServices";
 
-const ModalAddFavorites = ({ showModal, setShowModal }) => {
+const ModalAddFavorites = ({
+  setShowModal,
+  handleAddToUser,
+  userFavorites
+}) => {
   const [city, setCity] = useState("");
   const [course, setCourse] = useState("");
   const [modality, setModality] = useState(["presential", "distance"]);
   const [price, setPrice] = useState(10000);
-  const [orderBy, setOrderBy] = useState("universityName");
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [allCourses, setAllCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState([]);
@@ -55,14 +58,17 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
         }
 
         return (
+          !userFavorites.some(userFav => {
+            return JSON.stringify(userFav) === JSON.stringify(theCourse);
+          }) &&
           courseName === course &&
           theCourse.price_with_discount <= price &&
-          modality.includes(mod) &&
+          (modality.includes(mod) || modality.length === 0) &&
           theCourse.campus.city.toLowerCase().includes(city.toLowerCase())
         );
       })
     );
-  }, [city, course, modality, price, allCourses]);
+  }, [city, course, modality, price, allCourses, userFavorites]);
 
   const filterOrder = by => {
     switch (by) {
@@ -115,9 +121,24 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
   const sliderSteps =
     price >= 2000 ? 500 : price >= 1000 ? 100 : price >= 300 ? 50 : 25;
 
+  const handleAddToSelected = e => {
+    const { value } = e.target;
+    if (e.target.checked) {
+      setSelectedCourses([...selectedCourses, JSON.parse(value)]);
+    } else {
+      setSelectedCourses(
+        [...selectedCourses].filter(
+          thisCourse => JSON.stringify(thisCourse) !== value
+        )
+      );
+    }
+  };
 
+  const handleAddToUserAndSetSelected = arr => {
+    handleAddToUser(arr);
+    setSelectedCourses([]);
+  };
 
-  console.log(filteredCourses.length);
   return (
     <div className="modal">
       <span className="modal-close-btn" onClick={() => setShowModal(false)}>
@@ -133,7 +154,26 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
           <div className="modal-filters-container">
             <div className="modal-filter">
               <label>Selecione sua cidade</label>
-              <input type="text" value={city} onChange={e => setCity(e.target.value)}/>
+              <input
+                type="text"
+                value={city}
+                onChange={e => setCity(e.target.value)}
+              />
+              {city.length > 0 && (
+                <ul>
+                  {allCities
+                    .filter(
+                      theCity =>
+                        theCity.toLowerCase().includes(city.toLowerCase()) &&
+                        theCity !== city
+                    )
+                    .map(theCity => (
+                      <li key={theCity} onClick={() => setCity(theCity)}>
+                        {theCity}
+                      </li>
+                    ))}
+                </ul>
+              )}
             </div>
             <div className="modal-filter">
               <label>Selecione o curso de sua preferência</label>
@@ -202,15 +242,25 @@ const ModalAddFavorites = ({ showModal, setShowModal }) => {
                 <h1 style={{ color: "green" }}>LOADING</h1>
               ) : (
                 filteredCourses.map((course, idx) => {
-                  return <ModalResult key={idx} course={course} />;
+                  return (
+                    <ModalResult
+                      key={JSON.stringify(course)}
+                      course={course}
+                      selectedCourses={selectedCourses}
+                      handleAddToSelected={handleAddToSelected}
+                    />
+                  );
                 })
               )}
             </div>
           </div>
 
           <div className="modal-btns">
-            <button>Cancelar</button>
-            <button disabled={!selectedCourses.length}>
+            <button onClick={() => setShowModal(false)}>Cancelar</button>
+            <button
+              disabled={!selectedCourses.length}
+              onClick={arr => handleAddToUserAndSetSelected(selectedCourses)}
+            >
               Adicionar bolsa(s)
             </button>
           </div>
