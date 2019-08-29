@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import "./FavoriteScholarships.css";
 
@@ -10,7 +10,17 @@ import ModalAddFavorites from "./ModalAddFavorites/ModalAddFavorites";
 const FavoriteScholarships = () => {
   const [showModal, setShowModal] = useState(false);
   const [userFavorites, setUserFavorites] = useState([]);
-  const [filteredFavorites, setfilteredFavorites] = useState(userFavorites);
+  const [filteredFavorites, setFilteredFavorites] = useState([]);
+  const [allSemesters, setAllSemesters] = useState([]);
+
+  useEffect(() => {
+    setFilteredFavorites([...userFavorites]);
+    setAllSemesters(
+      [...new Set(userFavorites.map(fav => fav.enrollment_semester))].sort(
+        (a, b) => a - b
+      )
+    );
+  }, [userFavorites]);
 
   const deleteFavorite = courseToDelete => {
     setUserFavorites(
@@ -21,7 +31,11 @@ const FavoriteScholarships = () => {
   };
 
   const filterFavorites = semester => {
-    
+    if (semester === "allSemesters") {
+      setFilteredFavorites([...userFavorites]);
+    } else {
+      setFilteredFavorites(userFavorites.filter(fav => fav.enrollment_semester === semester))
+    }
   };
 
   const handleAddToUser = arr => {
@@ -35,14 +49,39 @@ const FavoriteScholarships = () => {
         Adicione os cursos e faculdades de seu interesse e receba atualizações
         com as melhores ofertas.
       </p>
-      <div className="semester-filter">
-        <span>Todos os semestres</span>
-        <span>2º semestre de 2019</span>
-        <span>1º semestre de 2020</span>
-      </div>
-      <div>
+      <ul className="semester-filter">
+        <li>
+          <input
+            type="radio"
+            id="allSemesters"
+            name="semesters"
+            value="allSemesters"
+            checked={filteredFavorites.length === userFavorites.length}
+            onChange={(e) => filterFavorites(e.target.value)}
+          />
+          <label htmlFor="allSemesters">Todos os semestres</label>
+        </li>
+        {allSemesters.map(semester => {
+          const semesterArr = semester.split(".");
+          return (
+            <li>
+              <input
+                type="radio"
+                id={semester}
+                name="semesters"
+                value={semester}
+                onChange={(e) => filterFavorites(e.target.value)}
+              />
+              <label htmlFor={semester}>
+                {semesterArr[1]}º semestre de {semesterArr[0]}
+              </label>
+            </li>
+          );
+        })}
+      </ul>
+      <ul>
         <AddCourse setShowModal={setShowModal} />
-        {userFavorites.map(fav => {
+        {filteredFavorites.map(fav => {
           return (
             <UserFavorite
               key={JSON.stringify(fav)}
@@ -51,7 +90,7 @@ const FavoriteScholarships = () => {
             />
           );
         })}
-      </div>
+      </ul>
       {showModal && (
         <ModalAddFavorites
           setShowModal={setShowModal}
