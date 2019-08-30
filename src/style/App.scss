@@ -1,0 +1,18 @@
+@import './variables';
+@import './addCourse';
+@import './favoriteScholarships';
+@import './modalAddFavorites';
+@import './modalResult';
+@import './userFavorite';
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: $greyBg;
+}
+

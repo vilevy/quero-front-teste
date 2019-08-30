@@ -1,0 +1,15 @@
+{
+    "version": 3,
+    "mappings": "AGAA,AAAA,MAAM,CAAC;EACL,UAAU,EAAE,GAAG;CAChB;;ACFD,AAAA,aAAa,CAAC;EACZ,KAAK,EAAE,MAAM;CACd;;AJKD,AAAA,CAAC,CAAC;EACA,MAAM,EAAE,CAAC;EACT,OAAO,EAAE,CAAC;EACV,OAAO,EAAE,CAAC;EACV,UAAU,EAAE,UAAU;CACvB;;AAED,AAAA,IAAI,CAAC;EACH,UAAU,ECTH,OAAO;CDUf",
+    "sources": [
+        "App.scss",
+        "_variables.scss",
+        "_addCourse.scss",
+        "_favoriteScholarships.scss",
+        "_modalAddFavorites.scss",
+        "_modalResult.scss",
+        "_userFavorite.scss"
+    ],
+    "names": [],
+    "file": "App.css"
+}
