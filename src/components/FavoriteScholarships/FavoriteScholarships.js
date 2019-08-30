@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import "./FavoriteScholarships.css";
-
 // components
 import AddCourse from "./AddCourse/Addcourse";
 import UserFavorite from "./UserFavorite/UserFavorite";
@@ -11,16 +9,33 @@ const FavoriteScholarships = () => {
   const [showModal, setShowModal] = useState(false);
   const [userFavorites, setUserFavorites] = useState([]);
   const [filteredFavorites, setFilteredFavorites] = useState([]);
+  const [filterBy, setFilterBy] = useState([]);
   const [allSemesters, setAllSemesters] = useState([]);
 
   useEffect(() => {
-    setFilteredFavorites([...userFavorites]);
-    setAllSemesters(
-      [...new Set(userFavorites.map(fav => fav.enrollment_semester))].sort(
-        (a, b) => a - b
-      )
-    );
+    const actualSemester = Math.ceil((new Date().getMonth() + 1) / 6);
+    const actualYear = new Date().getFullYear();
+    const secondFilterSemester = actualSemester === 1 ? 2 : 1;
+    const secondFilterYear = actualSemester === 1 ? actualYear : actualYear + 1;
+    setAllSemesters([
+      `${actualYear}.${actualSemester}`,
+      `${secondFilterYear}.${secondFilterSemester}`
+    ]);
+  }, []);
+
+  useEffect(() => {
+    setFilterBy("allSemesters");
   }, [userFavorites]);
+
+  useEffect(() => {
+    if (filterBy === "allSemesters") {
+      setFilteredFavorites([...userFavorites]);
+    } else {
+      setFilteredFavorites(
+        userFavorites.filter(fav => fav.enrollment_semester === filterBy)
+      );
+    }
+  }, [filterBy, userFavorites]);
 
   const deleteFavorite = courseToDelete => {
     setUserFavorites(
@@ -30,17 +45,11 @@ const FavoriteScholarships = () => {
     );
   };
 
-  const filterFavorites = semester => {
-    if (semester === "allSemesters") {
-      setFilteredFavorites([...userFavorites]);
-    } else {
-      setFilteredFavorites(userFavorites.filter(fav => fav.enrollment_semester === semester))
-    }
-  };
-
   const handleAddToUser = arr => {
     setUserFavorites([...userFavorites, ...arr]);
+    setFilterBy("allSemesters");
   };
+
 
   return (
     <main>
@@ -50,27 +59,28 @@ const FavoriteScholarships = () => {
         com as melhores ofertas.
       </p>
       <ul className="semester-filter">
-        <li>
+        <li key="all">
           <input
             type="radio"
             id="allSemesters"
             name="semesters"
             value="allSemesters"
-            checked={filteredFavorites.length === userFavorites.length}
-            onChange={(e) => filterFavorites(e.target.value)}
+            checked={filterBy === "allSemesters"}
+            onChange={e => setFilterBy(e.target.value)}
           />
           <label htmlFor="allSemesters">Todos os semestres</label>
         </li>
-        {allSemesters.map(semester => {
+        {allSemesters.map((semester, idx) => {
           const semesterArr = semester.split(".");
           return (
-            <li>
+            <li key={allSemesters[idx]}>
               <input
                 type="radio"
                 id={semester}
                 name="semesters"
                 value={semester}
-                onChange={(e) => filterFavorites(e.target.value)}
+                checked={filterBy === semester}
+                onChange={e => setFilterBy(e.target.value)}
               />
               <label htmlFor={semester}>
                 {semesterArr[1]}º semestre de {semesterArr[0]}

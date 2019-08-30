@@ -1,3 +1,7 @@
 .logo-header {
   height: 50px;
 }
+
+.header-top-info {
+  background: $bluePrimary;
+}
