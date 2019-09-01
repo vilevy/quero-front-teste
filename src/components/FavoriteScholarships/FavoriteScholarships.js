@@ -50,16 +50,16 @@ const FavoriteScholarships = () => {
     setFilterBy("allSemesters");
   };
 
-
+  console.log(filterBy);
   return (
     <main>
       <h1>Bolsas favoritas</h1>
-      <p>
-        Adicione os cursos e faculdades de seu interesse e receba atualizações
-        com as melhores ofertas.
+      <p className="page-description-text">
+        Adicione os cursos e faculdades do seu interesse e receba atualizações
+        com as melhores ofertas disponíveis.
       </p>
       <ul className="semester-filter">
-        <li key="all">
+        <li key="all" className={filterBy === "allSemesters" ? "active" : null}>
           <input
             type="radio"
             id="allSemesters"
@@ -73,7 +73,10 @@ const FavoriteScholarships = () => {
         {allSemesters.map((semester, idx) => {
           const semesterArr = semester.split(".");
           return (
-            <li key={allSemesters[idx]}>
+            <li
+              key={allSemesters[idx]}
+              className={filterBy === semester ? "active" : null}
+            >
               <input
                 type="radio"
                 id={semester}
@@ -89,18 +92,18 @@ const FavoriteScholarships = () => {
           );
         })}
       </ul>
-      <ul>
-        <AddCourse setShowModal={setShowModal} />
-        {filteredFavorites.map(fav => {
-          return (
-            <UserFavorite
-              key={JSON.stringify(fav)}
-              favorite={fav}
-              deleteFavorite={deleteFavorite}
-            />
-          );
-        })}
-      </ul>
+
+      <AddCourse setShowModal={setShowModal} />
+      {filteredFavorites.map(fav => {
+        return (
+          <UserFavorite
+            key={JSON.stringify(fav)}
+            favorite={fav}
+            deleteFavorite={deleteFavorite}
+          />
+        );
+      })}
+
       {showModal && (
         <ModalAddFavorites
           setShowModal={setShowModal}
