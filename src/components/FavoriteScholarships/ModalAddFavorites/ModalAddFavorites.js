@@ -141,9 +141,10 @@ const ModalAddFavorites = ({
 
   return (
     <div className="modal">
-      <span className="modal-close-btn" onClick={() => setShowModal(false)}>
-        X
-      </span>
+      <span
+        className="modal-close-btn"
+        onClick={() => setShowModal(false)}
+      ></span>
 
       <div className="modal-container">
         <header>
@@ -155,6 +156,7 @@ const ModalAddFavorites = ({
             <div className="modal-filter">
               <label>Selecione sua cidade</label>
               <input
+                id="city-input"
                 type="text"
                 value={city}
                 onChange={e => setCity(e.target.value)}
@@ -177,43 +179,57 @@ const ModalAddFavorites = ({
             </div>
             <div className="modal-filter">
               <label>Selecione o curso de sua preferência</label>
-              <select
-                name="course"
-                id="course"
-                onChange={e => setCourse(e.target.value)}
-              >
-                <option default></option>
-                {allCoursesName.map((course, idx) => {
-                  return <option key={idx}>{course}</option>;
-                })}
-              </select>
+              <div className="custom-select">
+                <select
+                  name="course"
+                  id="course-select"
+                  onChange={e => setCourse(e.target.value)}
+                >
+                  <option default></option>
+                  {allCoursesName.map((course, idx) => {
+                    return (
+                      <option className="teste" key={idx}>
+                        {course}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
             </div>
             <div className="modal-filter">
               <label>Como você quer estudar?</label>
-              <input
-                type="checkbox"
-                id="presential"
-                name="modality"
-                checked={modality.includes("presential")}
-                onChange={e => handleModality(e)}
-              />
-              <label htmlFor="presential">Presencial</label>
-              <input
-                type="checkbox"
-                id="distance"
-                name="modality"
-                checked={modality.includes("distance")}
-                onChange={e => handleModality(e)}
-              />
-              <label htmlFor="distance">A distância</label>
+              <div className="course-kind-container">
+                <label className="course-kind-option">
+                  Presencial
+                  <input
+                    type="checkbox"
+                    id="presential"
+                    name="modality"
+                    checked={modality.includes("presential")}
+                    onChange={e => handleModality(e)}
+                  />
+                  <span className="custom-checkbox"></span>
+                </label>
+                <label className="course-kind-option">
+                  A distância
+                  <input
+                    type="checkbox"
+                    id="distance"
+                    name="modality"
+                    checked={modality.includes("distance")}
+                    onChange={e => handleModality(e)}
+                  />
+                  <span className="custom-checkbox"></span>
+                </label>
+              </div>
             </div>
-            <div className="modal-filter">
+            <div className="modal-filter" id="price-filter">
               <label>Até quanto pode pagar?</label>
-              <span>R${price}</span>
+              <span>R${parseInt(price).toLocaleString("pt-BR")}</span>
               <input
                 type="range"
                 className="price-slider"
-                min="100"
+                min="0"
                 max="10000"
                 value={price}
                 step={sliderSteps}
@@ -224,22 +240,26 @@ const ModalAddFavorites = ({
 
           <div className="modal-results-container">
             <div className="modal-results-header">
-              <h4>Resultado:</h4>
-              <label>Ordenar por</label>
-              <select
-                name="orderBy"
-                id="order-by"
-                onChange={e => filterOrder(e.target.value)}
-              >
-                <option value="universityName">Nome da faculdade</option>
-                <option value="lowerPrice">Menor preço</option>
-                <option value="higherPrice">Maior preço</option>
-                <option value="rating">Avaliação</option>
-              </select>
+              <div className="modal-results-header-title">
+                <span>Resultado:</span>
+                <span>Ordenar por</span>
+              </div>
+              <div className="custom-select">
+                <select
+                  name="orderBy"
+                  id="order-by"
+                  onChange={e => filterOrder(e.target.value)}
+                >
+                  <option value="universityName">Nome da faculdade</option>
+                  <option value="lowerPrice">Menor preço</option>
+                  <option value="higherPrice">Maior preço</option>
+                  <option value="rating">Avaliação</option>
+                </select>
+              </div>
             </div>
             <div className="modal-results">
               {loading ? (
-                <h1 style={{ color: "green" }}>LOADING</h1>
+                <span className="modal-api-loading"></span>
               ) : (
                 filteredCourses.map((course, idx) => {
                   return (
@@ -256,8 +276,14 @@ const ModalAddFavorites = ({
           </div>
 
           <div className="modal-btns">
-            <button onClick={() => setShowModal(false)}>Cancelar</button>
             <button
+              className="modal-cancel-btn"
+              onClick={() => setShowModal(false)}
+            >
+              Cancelar
+            </button>
+            <button
+              className="modal-add-btn"
               disabled={!selectedCourses.length}
               onClick={arr => handleAddToUserAndSetSelected(selectedCourses)}
             >
@@ -266,8 +292,10 @@ const ModalAddFavorites = ({
           </div>
         </div>
       </div>
-
-      <div className="modal-bg-overlay"></div>
+      <div
+        className="modal-bg-overlay"
+        onClick={() => setShowModal(false)}
+      ></div>
     </div>
   );
 };

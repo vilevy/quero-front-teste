@@ -1,9 +1,11 @@
-@import './variables';
-@import './addCourse';
-@import './favoriteScholarships';
-@import './modalAddFavorites';
-@import './modalResult';
-@import './userFavorite';
+@import "./variables";
+@import "./addCourse";
+@import "./favoriteScholarships";
+@import "./modalAddFavorites";
+@import "./modalResult";
+@import "./userFavorite";
+@import "./header";
+@import "./footer";
 
 * {
   margin: 0;
@@ -14,5 +16,19 @@
 
 body {
   background: $greyBg;
+  font-family: "Montserrat", sans-serif;
+  color: $blackText;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.desktop-content {
+  display: none !important;
+}
