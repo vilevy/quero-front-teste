@@ -8,21 +8,23 @@ const ModalResult = ({ course, handleAddToSelected }) => {
   return (
     <div className="modal-course-list-item">
       <input
+        id={JSON.stringify(course)}
         type="checkbox"
         value={JSON.stringify(course)}
         onClick={e => handleAddToSelected(e)}
       />
-      <img
-        width="100px"
-        src={course.university.logo_url}
-        alt={course.university.name}
-      />
-      <p>{course.course.name}</p>
-      <p>{course.course.level}</p>
-      <p>
-        Bolsa de <span>{Math.round(course.discount_percentage)}%</span>
-      </p>
-      <p>R$ {priceBrazilianFormat}/mês</p>
+      <label className="image-container" htmlFor={JSON.stringify(course)}>
+        <img src={course.university.logo_url} alt={course.university.name} />
+      </label>
+      <div className="modal-course-info">
+        <p className="modal-course-name">{course.course.name}</p>
+        <p className="modal-course-level">{course.course.level}</p>
+        <p>
+          Bolsa de <span className="gree-text">{Math.round(course.discount_percentage)}%</span>
+        </p>
+        <p className="gree-text">R$ {priceBrazilianFormat}/mês</p>
+      </div>
+      <label htmlFor={JSON.stringify(course)} className="custom-checkbox"></label>
     </div>
   );
 };

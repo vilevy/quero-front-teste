@@ -8,6 +8,7 @@ header {
     align-items: center;
     width: 100%;
     padding: 0.5rem 0;
+    height: 5rem;
   }
 
   .logo-header {
@@ -28,6 +29,7 @@ header {
     .icon {
       fill: $blueDark;
       width: 50%;
+      max-width: 100px;
       margin-bottom: 0.3rem;
     }
   }

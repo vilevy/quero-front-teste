@@ -50,9 +50,9 @@ const FavoriteScholarships = () => {
     setFilterBy("allSemesters");
   };
 
-  console.log(filterBy);
+
   return (
-    <main>
+    <main className={showModal ? "main-modal-open" : null}>
       <h1>Bolsas favoritas</h1>
       <p className="page-description-text">
         Adicione os cursos e faculdades do seu interesse e receba atualizações

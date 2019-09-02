@@ -14,6 +14,12 @@
   box-sizing: border-box;
 }
 
+body {
+  background: $greyBg;
+  font-family: "Montserrat", sans-serif;
+  color: $blackText;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -21,11 +27,6 @@ a {
 
 li {
   list-style: none;
-}
-
-body {
-  background: $greyBg;
-  font-family: "Montserrat", sans-serif;
 }
 
 .desktop-content {

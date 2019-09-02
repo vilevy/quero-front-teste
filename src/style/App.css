@@ -1,9 +1,10 @@
 .add-favorite-card {
+  cursor: pointer;
   -webkit-box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.25);
           box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.25);
   padding: 2rem 3rem;
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .add-favorite-card .add-favorite-icon {
@@ -35,6 +36,8 @@ main {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  min-height: 100%;
+  height: 100%;
 }
 
 main h1 {
@@ -59,10 +62,14 @@ main .semester-filter input {
 }
 
 main .semester-filter li {
+  cursor: pointer;
   font-weight: 700;
-  padding: 1rem;
   color: #007a8d;
   border: 2px solid #007a8d;
+}
+
+main .semester-filter li label {
+  cursor: pointer;
 }
 
 main .semester-filter li:first-child {
@@ -73,13 +80,577 @@ main .semester-filter li:last-child {
   border-radius: 0 0 0.4rem 0.4rem;
 }
 
+main .semester-filter label {
+  display: block;
+  padding: 1rem;
+}
+
 main .semester-filter .active {
   color: #fff;
   background: #007a8d;
 }
 
-.price-slider {
-  width: 1000px;
+.main-modal-open {
+  overflow: hidden;
+  position: fixed;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.modal .modal-container {
+  z-index: 9999 !important;
+  background: #fbfbfb;
+  position: absolute;
+  width: 100%;
+  top: 5rem;
+  bottom: 0;
+  overflow-y: auto;
+  padding: 1.5rem;
+}
+
+.modal .modal-container header {
+  color: #1f2d30;
+}
+
+.modal .modal-container header h2 {
+  margin-bottom: 0.5rem;
+}
+
+.modal .modal-container header p {
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal .modal-container .modal-filter {
+  margin-bottom: 1.5rem;
+}
+
+.modal .modal-container .modal-filter label {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.modal .modal-container .modal-filter #city-input,
+.modal .modal-container .modal-filter #course-select {
+  margin-top: 0.2rem;
+  border-radius: 0.2rem;
+  border: 1px solid rgba(150, 150, 150, 0.8);
+  padding: 1rem 0.5rem;
+  width: 100%;
+  background: none;
+}
+
+.modal .modal-container .modal-filter #course-select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.modal .modal-container .modal-filter .custom-select {
+  position: relative;
+}
+
+.modal .modal-container .modal-filter .custom-select::before {
+  content: "";
+  z-index: -1;
+  width: 0.5rem;
+  height: 0.5rem;
+  border: solid #969696;
+  border-width: 0 0 2px 2px;
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  -webkit-transform: rotate(-45deg) translateY(-50%);
+          transform: rotate(-45deg) translateY(-50%);
+}
+
+.modal .modal-container .modal-filter .course-kind-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
+  margin: 1.5rem 0;
+}
+
+.modal .modal-container .modal-filter .course-kind-container .course-kind-option {
+  cursor: pointer;
+  width: 45%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: reverse;
+      -ms-flex-direction: row-reverse;
+          flex-direction: row-reverse;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  font-weight: 500;
+  text-transform: none;
+  font-size: 1rem;
+  position: relative;
+}
+
+.modal .modal-container .modal-filter .course-kind-container .course-kind-option .custom-checkbox {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  position: relative;
+  height: 1.1rem;
+  width: 1.1rem;
+  border-radius: 0.15rem;
+  background-color: rgba(150, 150, 150, 0.2);
+  margin-right: 0.5rem;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.modal .modal-container .modal-filter .course-kind-container .course-kind-option input {
+  display: none;
+}
+
+.modal .modal-container .modal-filter .course-kind-container .course-kind-option input:checked ~ .custom-checkbox {
+  background: #18acc4;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.modal .modal-container .modal-filter .course-kind-container .course-kind-option input:checked ~ .custom-checkbox:before {
+  display: inline-block;
+  position: absolute;
+  top: 25%;
+  left: 20%;
+  content: "";
+  width: 50%;
+  height: 25%;
+  border: solid white;
+  border-width: 0 0 2px 2px;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.modal .modal-container #price-filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.modal .modal-container #price-filter label {
+  margin-bottom: 0.5rem;
+}
+
+.modal .modal-container #price-filter span {
+  margin-bottom: 1rem;
+}
+
+.modal .modal-container #price-filter input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  width: 100%;
+  height: 0.2rem;
+  background: #18acc4;
+  border-radius: 0.2rem;
+  margin: 0.5rem 0;
+}
+
+.modal .modal-container #price-filter input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+          appearance: none;
+  border: 2px solid #18acc4;
+  height: 1.8rem;
+  width: 1.8rem;
+  border-radius: 28px;
+  background: #fbfbfb;
+  cursor: pointer;
+  margin-top: 3.1px;
+}
+
+.modal .modal-container .modal-results {
+  position: relative;
+  min-height: 10rem;
+}
+
+.modal .modal-container .modal-results-container .modal-results-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  font-weight: 700;
+}
+
+.modal .modal-container .modal-results-container .modal-results-header .modal-results-header-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.modal .modal-container .modal-results-container .modal-results-header .custom-select {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.modal .modal-container .modal-results-container .modal-results-header .custom-select #order-by {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  position: relative;
+  background: none;
+  border: none;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  color: #007a8d;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  direction: rtl;
+  padding: 0.5rem;
+}
+
+.modal .modal-container .modal-results-container .modal-results-header .custom-select #order-by:active {
+  direction: ltr;
+}
+
+.modal .modal-container .modal-results-container .modal-results-header .custom-select:after {
+  display: inline-block;
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  border: solid #007a8d;
+  border-width: 0 0 2px 2px;
+  margin-right: 0.3rem;
+  -webkit-transform: rotate(-45deg) translateY(25%);
+          transform: rotate(-45deg) translateY(25%);
+}
+
+.modal .modal-container .modal-btns {
+  margin-top: 1.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.modal .modal-container .modal-btns .modal-cancel-btn {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.75rem 1.3rem;
+  color: #007a8d;
+  background: none;
+  border: 1px solid #007a8d;
+  border-radius: 0.4rem;
+}
+
+.modal .modal-container .modal-btns .modal-add-btn {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 0.75rem 1.3rem;
+  color: #1f2d30;
+  background: #fdcb13;
+  border: 1px solid #de9e1f;
+  border-radius: 0.4rem;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.modal .modal-container .modal-btns .modal-add-btn:disabled {
+  background: rgba(150, 150, 150, 0.8);
+  border: 1px solid #646464;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.modal .modal-bg-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  cursor: pointer;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background: rgba(31, 45, 48, 0.8);
+}
+
+.modal .modal-close-btn {
+  position: fixed;
+  top: 1rem;
+  right: 2rem;
+  z-index: 2;
+}
+
+.modal .modal-close-btn::before, .modal .modal-close-btn::after {
+  content: "";
+  height: 1.9rem;
+  display: inline-block;
+  width: 0.2rem;
+  background: #fbfbfb;
+}
+
+.modal .modal-close-btn::before {
+  -webkit-transform: rotate(45deg) translateX(50%);
+          transform: rotate(45deg) translateX(50%);
+}
+
+.modal .modal-close-btn::after {
+  -webkit-transform: rotate(-45deg) translateX(-50%);
+          transform: rotate(-45deg) translateX(-50%);
+}
+
+.modal-api-loading {
+  content: '';
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: 10px solid #ccc;
+  border-top-color: #18acc4;
+  -webkit-transform: translate(-50%, -70%);
+          transform: translate(-50%, -70%);
+  -webkit-animation: load .3s linear infinite;
+          animation: load .3s linear infinite;
+}
+
+@-webkit-keyframes load {
+  to {
+    -webkit-transform: translate(-50%, -70%) rotate(360deg);
+            transform: translate(-50%, -70%) rotate(360deg);
+  }
+}
+
+@keyframes load {
+  to {
+    -webkit-transform: translate(-50%, -70%) rotate(360deg);
+            transform: translate(-50%, -70%) rotate(360deg);
+  }
+}
+
+.modal-course-list-item {
+  border-top: 1px solid rgba(150, 150, 150, 0.3);
+  border-bottom: 1px solid rgba(150, 150, 150, 0.3);
+  padding: 1.5rem 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal-course-list-item input {
+  display: none;
+}
+
+.modal-course-list-item input:checked ~ .custom-checkbox {
+  background: #18acc4;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  border: 1px solid #fbfbfb;
+}
+
+.modal-course-list-item input:checked ~ .custom-checkbox:before {
+  display: inline-block;
+  position: absolute;
+  top: 22%;
+  left: 20%;
+  content: "";
+  width: 50%;
+  height: 25%;
+  border: solid white;
+  border-width: 0 0 2px 2px;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+}
+
+.modal-course-list-item .custom-checkbox {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  position: relative;
+  height: 1.2rem;
+  width: 1.2rem;
+  border-radius: 0.15rem;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+  border: 1px solid #1f2d30;
+}
+
+.modal-course-list-item .image-container {
+  -webkit-box-ordinal-group: 3;
+      -ms-flex-order: 2;
+          order: 2;
+  margin: 0 2rem;
+}
+
+.modal-course-list-item img {
+  width: 4rem;
+}
+
+.modal-course-list-item .modal-course-info {
+  -webkit-box-ordinal-group: 4;
+      -ms-flex-order: 3;
+          order: 3;
+}
+
+.modal-course-list-item .modal-course-info .modal-course-name {
+  color: #007a8d;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.modal-course-list-item .modal-course-info .modal-course-level {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.modal-course-list-item .modal-course-info .gree-text {
+  font-weight: 700;
+  color: #0FA866;
+  margin-top: 0.5rem;
+}
+
+.favorite-card {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 4px 6px 1px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.favorite-card img {
+  width: 9rem;
+  margin-bottom: 1rem;
+}
+
+.favorite-card .upper-bold {
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.favorite-card h6 {
+  color: #007a8d;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.favorite-card .rating-text {
+  font-weight: 700;
+}
+
+.favorite-card .favorite-card-course-info-center {
+  margin: 1.5rem 0;
+  padding: 1.5rem 0;
+  border-top: 3px solid #ececec;
+  border-bottom: 3px solid #ececec;
+}
+
+.favorite-card .favorite-card-course-info-center .favorite-start-date {
+  font-size: 0.8rem;
+}
+
+.favorite-card .favorite-price-title {
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.favorite-card .favorite-full-price {
+  font-size: 0.8rem;
+  text-decoration: line-through;
+  margin-bottom: 0.3rem;
+}
+
+.favorite-card .favorite-discounted-price {
+  font-size: .8rem;
+}
+
+.favorite-card .favorite-discounted-price .green-bold {
+  color: #0FA866;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.favorite-card .favorite-card-buttons {
+  margin-top: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.modal-cancel-btn {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 1rem;
+  color: #007a8d;
+  background: none;
+  border: 1px solid #007a8d;
+  border-radius: 0.4rem;
+  width: 40%;
+}
+
+.modal-add-btn {
+  font-size: 1.05rem;
+  font-weight: 700;
+  padding: 1rem;
+  color: #1f2d30;
+  background: #fdcb13;
+  border: 1px solid #de9e1f;
+  border-radius: 0.4rem;
+  width: 55%;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.modal-add-btn:disabled {
+  background: rgba(150, 150, 150, 0.8);
+  border: 1px solid #646464;
+  -webkit-transition: 0.2s ease;
+  transition: 0.2s ease;
 }
 
 header {
@@ -99,6 +670,7 @@ header .header-top-info {
           align-items: center;
   width: 100%;
   padding: 0.5rem 0;
+  height: 5rem;
 }
 
 header .logo-header {
@@ -130,6 +702,7 @@ header .icon-container {
 header .icon-container .icon {
   fill: #007a8d;
   width: 50%;
+  max-width: 100px;
   margin-bottom: 0.3rem;
 }
 
@@ -237,7 +810,7 @@ footer .footer-top-larger .footer-top-larger-text {
 }
 
 footer .footer-top-larger .footer-top-larger-text .footer-top-larger-text-bottom {
-  font-weight: 400;
+  font-weight: 500;
   margin-top: 0.2rem;
 }
 
@@ -302,6 +875,12 @@ footer .footer-copyright .heart-icon {
           box-sizing: border-box;
 }
 
+body {
+  background: #fbfbfb;
+  font-family: "Montserrat", sans-serif;
+  color: #1f2d30;
+}
+
 a {
   color: inherit;
   text-decoration: none;
@@ -309,11 +888,6 @@ a {
 
 li {
   list-style: none;
-}
-
-body {
-  background: #fbfbfb;
-  font-family: "Montserrat", sans-serif;
 }
 
 .desktop-content {

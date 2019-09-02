@@ -5,7 +5,6 @@ const Footer = () => {
     <footer>
       <div className="footer-top-info">
         <div className="footer-top-larger">
-          {/* <FontAwesomeIcon icon={faWhatsapp} /> */}
           <svg
             aria-hidden="true"
             focusable="false"
