@@ -25,86 +25,103 @@
       }
     }
 
-    .modal-filter {
-      margin-bottom: 1.5rem;
-      label {
-        text-transform: uppercase;
-        font-weight: 700;
-        font-size: 0.8rem;
-      }
-      #city-input,
-      #course-select {
-        margin-top: 0.2rem;
-        border-radius: 0.2rem;
-        border: 1px solid rgba(150, 150, 150, 0.8);
-        padding: 1rem 0.5rem;
-        width: 100%;
-        background: none;
-      }
-      #course-select {
-        appearance: none;
-      }
-      .custom-select {
-        position: relative;
-        &::before {
-          content: "";
-          z-index: -1;
-          width: 0.5rem;
-          height: 0.5rem;
-          border: solid rgb(150, 150, 150);
-          border-width: 0 0 2px 2px;
-          position: absolute;
-          top: 50%;
-          right: 1rem;
-          transform: rotate(-45deg) translateY(-50%);
+    .modal-filters-container {
+      display: flex;
+      flex-direction: column;
+      .modal-filter {
+        margin-bottom: 1.5rem;
+        label {
+          text-transform: uppercase;
+          font-weight: 700;
+          font-size: 0.8rem;
         }
-      }
-
-      .course-kind-container {
-        display: flex;
-        width: 100%;
-        margin: 1.5rem 0;
-        .course-kind-option {
-          cursor: pointer;
-          width: 45%;
-          display: flex;
-          flex-direction: row-reverse;
-          justify-content: flex-end;
-          align-items: center;
-          font-weight: 500;
-          text-transform: none;
-          font-size: 1rem;
+        #city-input,
+        #course-select {
+          margin-top: 0.2rem;
+          border-radius: 0.2rem;
+          border: 1px solid rgba(150, 150, 150, 0.8);
+          padding: 1rem 0.5rem;
+          width: 100%;
+          background: none;
+        }
+        #course-select {
+          appearance: none;
+        }
+        .custom-select {
           position: relative;
-          .custom-checkbox {
-            flex-shrink: 0;
-            position: relative;
-            height: 1.1rem;
-            width: 1.1rem;
-            border-radius: 0.15rem;
-            background-color: rgba(150, 150, 150, 0.2);
-            margin-right: 0.5rem;
-            transition: 0.2s ease;
+          &::before {
+            content: "";
+            z-index: -1;
+            width: 0.5rem;
+            height: 0.5rem;
+            border: solid rgb(150, 150, 150);
+            border-width: 0 0 2px 2px;
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: rotate(-45deg) translateY(-50%);
           }
-          input {
-            display: none;
-            &:checked ~ .custom-checkbox {
-              background: $blueLight;
+        }
+
+        .course-kind-container {
+          display: flex;
+          width: 100%;
+          margin: 1.5rem 0;
+          .course-kind-option {
+            cursor: pointer;
+            width: 45%;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            align-items: center;
+            font-weight: 500;
+            text-transform: none;
+            font-size: 1rem;
+            position: relative;
+            .custom-checkbox {
+              flex-shrink: 0;
+              position: relative;
+              height: 1.1rem;
+              width: 1.1rem;
+              border-radius: 0.15rem;
+              background-color: rgba(150, 150, 150, 0.2);
+              margin-right: 0.5rem;
               transition: 0.2s ease;
-              &:before {
-                display: inline-block;
-                position: absolute;
-                top: 25%;
-                left: 20%;
-                content: "";
-                width: 50%;
-                height: 25%;
-                border: solid white;
-                border-width: 0 0 2px 2px;
-                transform: rotate(-45deg);
+            }
+            input {
+              display: none;
+              &:checked ~ .custom-checkbox {
+                background: $blueLight;
+                transition: 0.2s ease;
+                &:before {
+                  display: inline-block;
+                  position: absolute;
+                  top: 25%;
+                  left: 20%;
+                  content: "";
+                  width: 50%;
+                  height: 25%;
+                  border: solid white;
+                  border-width: 0 0 2px 2px;
+                  transform: rotate(-45deg);
+                }
               }
             }
           }
         }
+        @media (min-width: $breakpoint) {
+          width: 48%;
+        }
+      }
+      @media (min-width: $breakpoint) {
+        flex-direction: row;
+        margin: 0;
+        padding: 0;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        flex-shrink: 0;
+        flex-grow: 0;
+        width: 100%;
       }
     }
     #price-filter {
@@ -138,8 +155,7 @@
 
     .modal-results {
       position: relative;
-      min-height: 10rem;
-      // width: 100%;
+      min-height: 5rem;
     }
 
     .modal-results-container {
@@ -195,7 +211,7 @@
       .modal-cancel-btn {
         font-size: 1.05rem;
         font-weight: 700;
-        padding: 0.75rem 1.3rem;
+        padding: 0.75rem;
         color: $blueDark;
         background: none;
         border: 1px solid $blueDark;
@@ -204,7 +220,7 @@
       .modal-add-btn {
         font-size: 1.05rem;
         font-weight: 700;
-        padding: 0.75rem 1.3rem;
+        padding: 0.75rem;
         color: $blackText;
         background: $yellowLight;
         border: 1px solid $yellowDark;
@@ -216,6 +232,17 @@
           transition: 0.2s ease;
         }
       }
+      @media (min-width: $breakpoint) {
+        width: 50%;
+        margin-left: auto;
+      }
+    }
+    @media (min-width: $breakpoint) {
+      width: 65%;
+      left: 50%;
+      transform: translateX(-50%);
+      height: 80%;
+      padding: 2rem;
     }
   }
   .modal-bg-overlay {
@@ -229,6 +256,7 @@
     background: $modalOverlay;
   }
   .modal-close-btn {
+    cursor: pointer;
     position: fixed;
     top: 1rem;
     right: 2rem;
@@ -247,11 +275,14 @@
     &::after {
       transform: rotate(-45deg) translateX(-50%);
     }
+    @media (min-width: $breakpoint) {
+      right: 18%;
+    }
   }
 }
 
 .modal-api-loading {
-  content: '';
+  content: "";
   box-sizing: border-box;
   position: absolute;
   top: 50%;
@@ -262,9 +293,11 @@
   border: 10px solid #ccc;
   border-top-color: $blueLight;
   transform: translate(-50%, -70%);
-  animation: load .3s linear infinite;
+  animation: load 0.3s linear infinite;
 }
 
 @keyframes load {
-  to {transform: translate(-50%, -70%) rotate(360deg);}
+  to {
+    transform: translate(-50%, -70%) rotate(360deg);
+  }
 }
