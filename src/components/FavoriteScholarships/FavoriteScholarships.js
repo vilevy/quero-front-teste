@@ -103,7 +103,7 @@ const FavoriteScholarships = () => {
       </ul>
       <div
         className="favorite-page-main-content"
-        id={userFavorites.length === 0 ? "add-card-solo" : null}
+        id={filteredFavorites.length === 0 ? "add-card-solo" : null}
       >
         <AddCourse setShowModal={setShowModal} />
         {filteredFavorites.map(fav => {
