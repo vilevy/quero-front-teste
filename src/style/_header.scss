@@ -120,6 +120,7 @@ header {
     line-height: 2.5rem;
     box-shadow: inset 0px 10px 5px -6px rgba(0, 0, 0, 0.1);
     .menu-title {
+      cursor: pointer;
       display: flex;
       align-items: center;
       .menu-chevron {
@@ -128,42 +129,65 @@ header {
         width: 0.7rem;
       }
     }
+
+    .menu-chevron {
+      transition: 0.3s ease;
+    }
+    .opened-navbar-svg-rotate {
+      transform: rotate(-180deg);
+      transition: 0.3s ease;
+    }
     .dropdown-navbar {
       font-size: 0.95rem;
-      @media (min-width: $breakpoint) {
-        justify-content: flex-start;
-        padding: 0 5%;
-      }
       li {
-        @media (min-width: $breakpoint) {
-          display: inherit;
-          margin-left: 3rem;
-          height: 2.5rem;
-        }
+        margin-left: 3rem;
+        height: 2.5rem;
         .nav-item-active {
-          @media (min-width: $breakpoint) {
-            padding: 0 1rem;
-            display: inline-block;
-            background: $blueDark;
-          }
+          padding: 0 1rem;
+          display: inline-block;
+          background: $blueDark;
         }
       }
     }
-
-    .navbar-opened {
-      
-    }
-
-    .navbar-closed {
-      display: none;
-      @media (min-width: $breakpoint) {
-        display: inherit;
-      }
-    }
-
     @media (min-width: $breakpoint) {
       justify-content: flex-start;
       padding: 0 5%;
+    }
+  }
+
+  .navbar-closed {
+    li {
+      height: 0;
+      opacity: 0;
+      transition: 0.1s ease;
+      text-align: center;
+    }
+  }
+
+  .navbar-opened {
+    margin-bottom: 2rem;
+    li {
+      opacity: 1;
+      transition: 0.2s ease;
+      height: 100%;
+      padding: 1rem 0.5rem;
+      text-align: center;
+      width: 100%;
+      border-bottom: 2px solid #ccc;
+      a {
+        width: 100%;
+        display: block;
+      }
+      &:hover {
+        background: $blueDark;
+        color: $greyBg;
+        font-weight: 700;
+      }
+    }
+    .nav-item-active {
+      background: $blueDark;
+      color: $greyBg;
+      font-weight: 700;
     }
   }
 

@@ -163,6 +163,10 @@ const ModalAddFavorites = ({
     setSelectedCourses([]);
   };
 
+  const checkSelected = id => {
+    return  selectedCourses.some(el => el.id === id);
+  };
+
   return (
     <div className="modal">
       <span
@@ -297,6 +301,7 @@ const ModalAddFavorites = ({
                 filteredCourses.map(course => {
                   return (
                     <ModalResult
+                      checkSelected={checkSelected}
                       key={course.id}
                       course={course}
                       selectedCourses={selectedCourses}
