@@ -36,7 +36,7 @@ li {
 .desktop-content {
   display: none !important;
   @media (min-width: $breakpoint) {
-    display: inherit !important;
+    display: block !important;
   }
 }
 

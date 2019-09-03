@@ -108,14 +108,14 @@ const UserFavorite = ({ favorite, deleteFavorite }) => {
       ) : (
         <div className="favorite-card-bottom-info">
           <p className="favorite-price-title">Bolsa indisponível</p>
-          <p class="favorite-unavailable-text">
+          <p className="favorite-unavailable-text">
             Entre em contato com nosso atendimento para saber mais
           </p>
         </div>
       )}
       <div className="favorite-card-buttons">
         <button
-          value={JSON.stringify(favorite)}
+          value={favorite.id}
           onClick={e => deleteFavorite(e.target.value)}
           className="modal-cancel-btn"
         >

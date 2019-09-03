@@ -8,12 +8,12 @@ const ModalResult = ({ course, handleAddToSelected }) => {
   return (
     <div className="modal-course-list-item">
       <input
-        id={JSON.stringify(course)}
+        id={course.id}
         type="checkbox"
-        value={JSON.stringify(course)}
+        value={course.id}
         onClick={e => handleAddToSelected(e)}
       />
-      <label className="image-container" htmlFor={JSON.stringify(course)}>
+      <label className="image-container" htmlFor={course.id}>
         <img src={course.university.logo_url} alt={course.university.name} />
       </label>
       <div className="modal-course-info">
@@ -32,7 +32,7 @@ const ModalResult = ({ course, handleAddToSelected }) => {
         </div>
       </div>
       <label
-        htmlFor={JSON.stringify(course)}
+        htmlFor={course.id}
         className="custom-checkbox"
       ></label>
     </div>
