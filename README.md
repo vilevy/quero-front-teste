@@ -1,68 +1,117 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Teste de Front End da Quero Educação
 
-## Available Scripts
+## Bolsas favoritas
 
-In the project directory, you can run:
+O **Querobolsa.com** é um marketplace de bolsas de estudo, que já ajudou milhares de alunos a escolher e ingressar no curso ideal, por um preço que podem pagar.
+A sua missão é fazer uma página onde o aluno possa filtrar bolsas de estudo de seu interesse e adicionar à uma lista de bolsas favoritas.
 
-### `npm start`
+## Instalação do projeto
+1. Faça download desse repositório.
+1. Rode o comando abaixo no terminal, dentro da pasta do projeto (é necessário ter o gerenciador de pacotes npm instalado)
+```bash
+npm install
+```
+3. Após a instalação das dependências, rode o comando:
+```bash
+npm start
+```
+## Considerações
+* Para manter o foco nas funcionalidades do projeto, botões, como do menu e "Ver oferta" estão com uma tag 'a' está com referência para um caminho vazio ('/#'). Por esse motivo, não utilizei o Link do react-router-dom.
+* Para o filtro dos semestre, na página de Bolsas Favoritas, considerei o semestre atual e o seguinte,como está no ayout. Mas deixei de forma dinâmica.
+* Criei um filtro de ordenação da busca, como o layout sugeria, e inclui as categorias 'Nome da faculdade', 'Maior preço', 'Menor preço' e 'Avaliação', como no site atual do Quero Bolsa (apenas não inclui relevância).
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Briefing
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+## Requisitos do projeto:
+* Apenas código front-end será considerado nesse projeto: HTML5, CSS e Javascript.
+* Pré-processadores CSS podem ser usados à vontade.
+* Frameworks CSS não são permitidos. Todo código CSS deve ser escrito por você.
+* O projeto pode ser escrito em javascript puro ou utilizar frameworks como Vue.js, React ou outro.
+* Gerenciadores de pacotes e task runners podem ser usados à vontade.
+* Ícones e imagens não precisam ser fiéis ao layout. Fique à vontade para utilizar a biblioteca de ícones de sua preferência. Nós recomendamos a versão gratuita do FontAwesome: https://fontawesome.com.
+* O projeto precisa ser responsivo, respeitando os layouts que iremos disponibilizar.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Layouts:
+As telas que você irá desenvolver estão neste link: https://drive.google.com/drive/folders/1W-tYS90OG4Jn7QiWQ9pTU6b2U64_PijO?usp=sharing
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+## Especificações de design:
+* Cores:
+  * Azul principal: `#18ACC4` ![#18ACC4](https://placehold.it/15/18ACC4/000000?text=+)
+  * Azul secundário: `#007A8D` ![#007A8D](https://placehold.it/15/007A8D/000000?text=+)
+  * Amarelo principal: `#FDCB13` ![#FDCB13](https://placehold.it/15/FDCB13/000000?text=+)
+  * Amarelo secundário: `#DE9E1F` ![#DE9E1F](https://placehold.it/15/DE9E1F/000000?text=+)
+  * Verde: `#0FA866` ![#0FA866](https://placehold.it/15/0FA866/000000?text=+)
+  * Preto (textos): `#1F2D30` ![#1F2D30](https://placehold.it/15/1F2D30/000000?text=+)
+  * Cinza (background): `#FBFBFB` ![#FBFBFB](https://placehold.it/15/FBFBFB/000000?text=+)
+  * Overlay do modal: Preto (`#1F2D30` ![#1F2D30](https://placehold.it/15/1F2D30/000000?text=+) ) com 88% de opacidade.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Especificações de funcionalidades:
+* O projeto possui uma única página, com a lista de favoritos e um modal para a busca de cursos;
+* A clicar em Adicionar curso, deve abrir o modal de busca;
+* A busca deve conter os seguintes filtros:
+  * Cidade;
+  * Curso;
+  * Modalidade (Presencial/EaD);
+  * Preço;
+* A lista de cursos deve ter ordenação por nome da faculdade;
+* Múltiplos cursos podem ser selecionados e adicionados à lista de favoritos;
+* O botão Adicionar bolsa(s) deve ficar desabilitado enquanto não houver cursos selecionados;
+* Os cursos podem ser removidos da lista de favoritos, através do botão Excluir;
+* O botão Ver oferta não leva a lugar algum;
+* Bolsas com { enabled: false }, devem aparecer com o botão Indisponível;
+* A lista de favoritos deve respeitar o semestre selecionado.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Dados:
+Disponibilizamos uma API de testes, onde você pode consultar a lista de cursos, fazendo uma requisição GET na seguinte url: https://testapi.io/api/redealumni/scholarships
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+A resposta da requisição irá retornar uma lista de bolsas de estudo no seguinte formato:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    "full_price": float,
+    "price_with_discount": float,
+    "discount_percentage": float,
+    "start_date": string,
+    "enrollment_semester": string,
+    "enabled": boolean,
+    "course": {
+      "name": string,
+      "kind": string,
+      "level": string,
+      "shift": string
+    },
+    "university": {
+      "name": string,
+      "score": float,
+      "logo_url": string
+    },
+    "campus": {
+      "name": string,
+      "city": string
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Instruções para entrega do projeto:
+* Desenvolva e versione esse projeto usando git.
+* Utilize o serviço de hospedagem de código de sua preferência: github, bitbucket, gitlab ou outro.
+* Crie um README com instruções claras sobre como executar seu projeto.
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## Critérios de avaliação:
+* Fidelidade ao layout solicitado;
+* Fidelidade às funcionalidades solicitadas;
+* HTML estruturado de forma semântica;
+* Clareza de nomenclatura do CSS;
+* Adesão ao mobile first.
 
-### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Sugestões extras (não obrigatórias):
+* Desenvolvimento de testes;
+* Seguir algum style guide de Javascript;
+* Seguir algum style guide de CSS;
+* Componentização e extensibilidade dos componentes Javascript;
+* Persistir a lista de favoritos no browser do cliente;
+* Aplicar animações de transição.
