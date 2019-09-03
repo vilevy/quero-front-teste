@@ -41,18 +41,17 @@ footer {
 
   .footer-top-small-container {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
+    flex-wrap: wrap;
     .footer-top-small-item {
-      flex-grow: 1;
-      padding: 1rem 2rem;
-      margin: 0.2rem;
-      // width: 32.5%;
-      background: $blueDark;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      flex-grow: 1;
+      padding: 1rem 2rem;
+      margin: 0.2rem;
+      background: $blueDark;
       &:first-child,
       &:last-child {
         margin: 0.2rem 0;
@@ -64,7 +63,9 @@ footer {
         margin-bottom: 0.5rem;
       }
       .footer-top-small-item-text {
-        margin-left: 1rem;
+        @media (min-width: $breakpoint) {
+          margin-left: 1rem;
+        }
       }
       @media (min-width: $breakpoint) {
         width: 25%;

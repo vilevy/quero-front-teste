@@ -28,6 +28,9 @@ const ModalAddFavorites = ({
     const getCourses = async () => {
       try {
         const response = await ScholarshipServices.get();
+        response.data.forEach(el => {
+          generateId(el);
+        });
         setAllCourses(response.data);
         setFilteredCourses(
           response.data.sort((a, b) =>
@@ -48,23 +51,6 @@ const ModalAddFavorites = ({
       }
     };
     getCourses();
-    window.addEventListener(
-      "keydown",
-      e => {
-        if (e.keyCode === 27) setShowModal(false);
-      },
-      false
-    );
-
-    return () => {
-      window.removeEventListener(
-        "keydown",
-        e => {
-          if (e.keyCode === 27) setShowModal(false);
-        },
-
-      );
-    };
   }, []);
 
   // filter when any filter property update
@@ -82,7 +68,7 @@ const ModalAddFavorites = ({
 
         return (
           !userFavorites.some(userFav => {
-            return JSON.stringify(userFav) === JSON.stringify(theCourse);
+            return userFav.id === theCourse.id;
           }) &&
           courseName === course &&
           theCourse.price_with_discount <= price &&
@@ -92,6 +78,20 @@ const ModalAddFavorites = ({
       })
     );
   }, [city, course, modality, price, allCourses, userFavorites]);
+
+  const generateId = eachCourse => {
+    eachCourse.id =
+      eachCourse.start_date +
+      eachCourse.enrollment_semester +
+      eachCourse.course.name +
+      eachCourse.course.kind +
+      eachCourse.course.level +
+      eachCourse.course.shift +
+      eachCourse.university.name +
+      eachCourse.campus.name +
+      eachCourse.campus.city;
+    eachCourse.id = eachCourse.id.replace(/ /g, "");
+  };
 
   const filterOrder = by => {
     switch (by) {
@@ -147,12 +147,13 @@ const ModalAddFavorites = ({
   const handleAddToSelected = e => {
     const { value } = e.target;
     if (e.target.checked) {
-      setSelectedCourses([...selectedCourses, JSON.parse(value)]);
+      setSelectedCourses([
+        ...selectedCourses,
+        [...allCourses].find(el => el.id === value)
+      ]);
     } else {
       setSelectedCourses(
-        [...selectedCourses].filter(
-          thisCourse => JSON.stringify(thisCourse) !== value
-        )
+        [...selectedCourses].filter(thisCourse => thisCourse.id !== value)
       );
     }
   };
@@ -185,7 +186,7 @@ const ModalAddFavorites = ({
                 onChange={e => setCity(e.target.value)}
               />
               {city.length > 0 && (
-                <ul>
+                <ul className="city-suggestion-list">
                   {allCities
                     .filter(
                       theCity =>
@@ -210,11 +211,7 @@ const ModalAddFavorites = ({
                 >
                   <option default></option>
                   {allCoursesName.map((course, idx) => {
-                    return (
-                      <option className="teste" key={idx}>
-                        {course}
-                      </option>
-                    );
+                    return <option key={idx}>{course}</option>;
                   })}
                 </select>
               </div>
@@ -297,10 +294,10 @@ const ModalAddFavorites = ({
                   </strong>
                 </p>
               ) : (
-                filteredCourses.map((course, idx) => {
+                filteredCourses.map(course => {
                   return (
                     <ModalResult
-                      key={JSON.stringify(course)}
+                      key={course.id}
                       course={course}
                       selectedCourses={selectedCourses}
                       handleAddToSelected={handleAddToSelected}

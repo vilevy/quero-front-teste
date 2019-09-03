@@ -130,16 +130,37 @@ header {
     }
     .dropdown-navbar {
       font-size: 0.95rem;
+      @media (min-width: $breakpoint) {
+        justify-content: flex-start;
+        padding: 0 5%;
+      }
       li {
-        margin-left: 3rem;
-        height: 2.5rem;
+        @media (min-width: $breakpoint) {
+          display: inherit;
+          margin-left: 3rem;
+          height: 2.5rem;
+        }
         .nav-item-active {
-          padding: 0 1rem;
-          display: inline-block;
-          background: $blueDark;
+          @media (min-width: $breakpoint) {
+            padding: 0 1rem;
+            display: inline-block;
+            background: $blueDark;
+          }
         }
       }
     }
+
+    .navbar-opened {
+      
+    }
+
+    .navbar-closed {
+      display: none;
+      @media (min-width: $breakpoint) {
+        display: inherit;
+      }
+    }
+
     @media (min-width: $breakpoint) {
       justify-content: flex-start;
       padding: 0 5%;

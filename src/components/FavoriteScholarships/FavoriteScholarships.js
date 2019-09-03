@@ -21,6 +21,8 @@ const FavoriteScholarships = () => {
       `${actualYear}.${actualSemester}`,
       `${secondFilterYear}.${secondFilterSemester}`
     ]);
+    const favs = JSON.parse(localStorage.getItem("@quero-bolsa/userFavorites"));
+    if (favs !== null) setUserFavorites([...favs]);
   }, []);
 
   useEffect(() => {
@@ -39,20 +41,23 @@ const FavoriteScholarships = () => {
 
   const deleteFavorite = courseToDelete => {
     setUserFavorites(
-      [...userFavorites].filter(
-        course => JSON.stringify(course) !== courseToDelete
+      [...userFavorites].filter(course => course.id !== courseToDelete)
+    );
+    localStorage.setItem(
+      "@quero-bolsa/userFavorites",
+      JSON.stringify(
+        [...userFavorites].filter(course => course.id !== courseToDelete)
       )
     );
   };
 
   const handleAddToUser = arr => {
     setUserFavorites([...userFavorites, ...arr]);
+    localStorage.setItem(
+      "@quero-bolsa/userFavorites",
+      JSON.stringify([...userFavorites, ...arr])
+    );
     setFilterBy("allSemesters");
-  };
-
-  const closeModalEsc = () => {
-    console.log("logou");
-    setShowModal(false);
   };
 
   return (
@@ -104,7 +109,7 @@ const FavoriteScholarships = () => {
         {filteredFavorites.map(fav => {
           return (
             <UserFavorite
-              key={JSON.stringify(fav)}
+              key={fav.id}
               favorite={fav}
               deleteFavorite={deleteFavorite}
             />

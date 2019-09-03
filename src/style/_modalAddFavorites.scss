@@ -35,6 +35,33 @@
           font-weight: 700;
           font-size: 0.8rem;
         }
+        input:focus ~ ul {
+          visibility: visible;
+          height: auto;
+          opacity: 1;
+        }
+        ul {
+          visibility: hidden;
+          height: 1px;
+          opacity: 0;
+          transition: 1s visibility;
+        }
+
+        .city-suggestion-list {
+          border: 1px solid #ccc;
+          box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.12);
+          li {
+            cursor: pointer;
+            padding: 0.5rem;
+            border-bottom: 1px solid #ccc;
+            &:hover {
+              background: $blueLight;
+              color: $greyBg;
+              font-weight: 700;
+            }
+          }
+        }
+
         #city-input,
         #course-select {
           margin-top: 0.2rem;
@@ -43,6 +70,7 @@
           padding: 1rem 0.5rem;
           width: 100%;
           background: none;
+          font-size: 1.1rem;
         }
         #course-select {
           appearance: none;
@@ -123,32 +151,33 @@
         flex-grow: 0;
         width: 100%;
       }
-    }
-    #price-filter {
-      display: flex;
-      flex-direction: column;
-      label {
-        margin-bottom: 0.5rem;
-      }
-      span {
-        margin-bottom: 1rem;
-      }
-      input {
-        appearance: none;
-        width: 100%;
-        height: 0.2rem;
-        background: $blueLight;
-        border-radius: 0.2rem;
-        margin: 0.5rem 0;
-        &::-webkit-slider-thumb {
+
+      #price-filter {
+        display: flex;
+        flex-direction: column;
+        label {
+          margin-bottom: 0.5rem;
+        }
+        span {
+          margin-bottom: 1rem;
+        }
+        input {
           appearance: none;
-          border: 2px solid $blueLight;
-          height: 1.8rem;
-          width: 1.8rem;
-          border-radius: 28px;
-          background: $greyBg;
-          cursor: pointer;
-          margin-top: 3.1px;
+          width: 100%;
+          height: 0.2rem;
+          background: $blueLight;
+          border-radius: 0.2rem;
+          margin: 0.5rem 0;
+          &::-webkit-slider-thumb {
+            appearance: none;
+            border: 2px solid $blueLight;
+            height: 1.8rem;
+            width: 1.8rem;
+            border-radius: 28px;
+            background: $greyBg;
+            cursor: pointer;
+            margin-top: 3.1px;
+          }
         }
       }
     }
