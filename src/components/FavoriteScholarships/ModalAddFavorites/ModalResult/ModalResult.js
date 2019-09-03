@@ -1,6 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-const ModalResult = ({ course, handleAddToSelected }) => {
+const ModalResult = ({ course, handleAddToSelected, checkSelected }) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  useEffect(() => {
+    setIsChecked(checkSelected(course.id));
+  }, [setIsChecked, checkSelected, course.id]);
+
+
   const priceWithDiscount = course.price_with_discount;
   const priceBrazilianFormat = priceWithDiscount.toLocaleString("pt-BR", {
     minimumFractionDigits: 2
@@ -11,6 +18,8 @@ const ModalResult = ({ course, handleAddToSelected }) => {
         id={course.id}
         type="checkbox"
         value={course.id}
+        checked={isChecked}
+        onChange={() => setIsChecked(!isChecked)}
         onClick={e => handleAddToSelected(e)}
       />
       <label className="image-container" htmlFor={course.id}>
@@ -31,10 +40,7 @@ const ModalResult = ({ course, handleAddToSelected }) => {
           <p className="gree-text">R$ {priceBrazilianFormat}/mês</p>
         </div>
       </div>
-      <label
-        htmlFor={course.id}
-        className="custom-checkbox"
-      ></label>
+      <label htmlFor={course.id} className="custom-checkbox"></label>
     </div>
   );
 };
