@@ -50,9 +50,13 @@ const FavoriteScholarships = () => {
     setFilterBy("allSemesters");
   };
 
+  const closeModalEsc = () => {
+    console.log("logou");
+    setShowModal(false);
+  };
 
   return (
-    <main className={showModal ? "main-modal-open" : null}>
+    <main>
       <h1>Bolsas favoritas</h1>
       <p className="page-description-text">
         Adicione os cursos e faculdades do seu interesse e receba atualizações
@@ -92,17 +96,21 @@ const FavoriteScholarships = () => {
           );
         })}
       </ul>
-
-      <AddCourse setShowModal={setShowModal} />
-      {filteredFavorites.map(fav => {
-        return (
-          <UserFavorite
-            key={JSON.stringify(fav)}
-            favorite={fav}
-            deleteFavorite={deleteFavorite}
-          />
-        );
-      })}
+      <div
+        className="favorite-page-main-content"
+        id={userFavorites.length === 0 ? "add-card-solo" : null}
+      >
+        <AddCourse setShowModal={setShowModal} />
+        {filteredFavorites.map(fav => {
+          return (
+            <UserFavorite
+              key={JSON.stringify(fav)}
+              favorite={fav}
+              deleteFavorite={deleteFavorite}
+            />
+          );
+        })}
+      </div>
 
       {showModal && (
         <ModalAddFavorites

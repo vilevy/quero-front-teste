@@ -4,6 +4,11 @@ main {
   flex-direction: column;
   min-height: 100%;
   height: 100%;
+
+  @media (min-width: $breakpoint) {
+    padding: 1rem 5%;
+  }
+
   h1 {
     margin-bottom: 1rem;
   }
@@ -17,6 +22,8 @@ main {
     margin-bottom: 3rem;
     text-align: center;
     width: 100%;
+    display: flex;
+    flex-direction: column;
     input {
       display: none;
     }
@@ -30,23 +37,46 @@ main {
       }
       &:first-child {
         border-radius: 0.4rem 0.4rem 0 0;
+        @media (min-width: $breakpoint) {
+          border-radius: 0.4rem 0 0 0.4rem;
+        }
       }
       &:last-child {
         border-radius: 0 0 0.4rem 0.4rem;
+        @media (min-width: $breakpoint) {
+          border-radius: 0 0.4rem 0.4rem 0;
+        }
       }
     }
     label {
       display: block;
       padding: 1rem;
+      @media (min-width: $breakpoint) {
+        padding: 0.5rem 1.5rem;
+      }
     }
     .active {
       color: #fff;
       background: $blueDark;
     }
+
+    @media (min-width: $breakpoint) {
+      flex-direction: row;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
   }
+  .favorite-page-main-content, .teste {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: center;
+  }
+
 }
 
-.main-modal-open {
-  overflow: hidden;
-  position: fixed;
+#add-card-solo {
+  justify-content: flex-start;
 }
+
+

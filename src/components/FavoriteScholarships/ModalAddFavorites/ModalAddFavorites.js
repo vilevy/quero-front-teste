@@ -11,6 +11,7 @@ const ModalAddFavorites = ({
   handleAddToUser,
   userFavorites
 }) => {
+  const [errorMessage, setErrorMessage] = useState("");
   const [city, setCity] = useState("");
   const [course, setCourse] = useState("");
   const [modality, setModality] = useState(["presential", "distance"]);
@@ -25,23 +26,45 @@ const ModalAddFavorites = ({
   // get data from api
   useEffect(() => {
     const getCourses = async () => {
-      const response = await ScholarshipServices.get();
-      setAllCourses(response.data);
-      setFilteredCourses(
-        response.data.sort((a, b) =>
-          a.university.name > b.university.name ? 1 : -1
-        )
-      );
-      setAllCoursesName(
-        [...new Set(response.data.map(course => course.course.name))].sort()
-      );
-      setAllCities(
-        [...new Set(response.data.map(course => course.campus.city))].sort()
-      );
-      setLoading(false);
-      return response.data;
+      try {
+        const response = await ScholarshipServices.get();
+        setAllCourses(response.data);
+        setFilteredCourses(
+          response.data.sort((a, b) =>
+            a.university.name > b.university.name ? 1 : -1
+          )
+        );
+        setAllCoursesName(
+          [...new Set(response.data.map(course => course.course.name))].sort()
+        );
+        setAllCities(
+          [...new Set(response.data.map(course => course.campus.city))].sort()
+        );
+        setLoading(false);
+        return response.data;
+      } catch (err) {
+        setLoading(false);
+        setErrorMessage(err);
+      }
     };
     getCourses();
+    window.addEventListener(
+      "keydown",
+      e => {
+        if (e.keyCode === 27) setShowModal(false);
+      },
+      false
+    );
+
+    return () => {
+      window.removeEventListener(
+        "keydown",
+        e => {
+          if (e.keyCode === 27) setShowModal(false);
+        },
+
+      );
+    };
   }, []);
 
   // filter when any filter property update
@@ -260,6 +283,19 @@ const ModalAddFavorites = ({
             <div className="modal-results">
               {loading ? (
                 <span className="modal-api-loading"></span>
+              ) : errorMessage ? (
+                <p>
+                  <strong>
+                    Ocorreu um erro ao tentar carregar os cursos. Por favor,
+                    tente novamente.
+                  </strong>
+                </p>
+              ) : filteredCourses.length === 0 ? (
+                <p>
+                  <strong>
+                    Nenhum curso encontrado. Tente alterar os filtros.
+                  </strong>
+                </p>
               ) : (
                 filteredCourses.map((course, idx) => {
                   return (

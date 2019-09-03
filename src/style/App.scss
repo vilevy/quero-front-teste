@@ -25,10 +25,23 @@ a {
   text-decoration: none;
 }
 
+button, a, input[type='checkbox'], label {
+  cursor: pointer;
+}
+
 li {
   list-style: none;
 }
 
 .desktop-content {
   display: none !important;
+  @media (min-width: $breakpoint) {
+    display: inherit !important;
+  }
+}
+
+.mobile-content {
+  @media (min-width: $breakpoint) {
+    display: none !important;
+  }
 }
