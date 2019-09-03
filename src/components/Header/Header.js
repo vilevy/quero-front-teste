@@ -89,7 +89,7 @@ const Header = () => {
               focusable="false"
               data-prefix="fas"
               data-icon="chevron-down"
-              className="svg-inline--fa fa-chevron-down fa-w-14 menu-chevron"
+              className={openNavbar ? "svg-inline--fa fa-chevron-down fa-w-14 menu-chevron opened-navbar-svg-rotate" : "svg-inline--fa fa-chevron-down fa-w-14 menu-chevron"}
               role="img"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"

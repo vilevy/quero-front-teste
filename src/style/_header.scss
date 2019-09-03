@@ -129,6 +129,14 @@ header {
         width: 0.7rem;
       }
     }
+
+    .menu-chevron {
+      transition: 0.3s ease;
+    }
+    .opened-navbar-svg-rotate {
+      transform: rotate(-180deg);
+      transition: 0.3s ease;
+    }
     .dropdown-navbar {
       font-size: 0.95rem;
       li {

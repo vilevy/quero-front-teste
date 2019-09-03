@@ -1219,6 +1219,18 @@ header .nav-main-ul .menu-title .menu-chevron {
   width: 0.7rem;
 }
 
+header .nav-main-ul .menu-chevron {
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+header .nav-main-ul .opened-navbar-svg-rotate {
+  -webkit-transform: rotate(-180deg);
+          transform: rotate(-180deg);
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
 header .nav-main-ul .dropdown-navbar {
   font-size: 0.95rem;
 }
